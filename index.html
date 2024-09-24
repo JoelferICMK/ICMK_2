@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Imus City Map</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Custom Styles -->
+    <style>
+        /* Reset body and HTML height to ensure full height is used */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Map container - should fill the viewport */
+        #map {
+            height: 100vh; /* Use full viewport height */
+            width: 100%;   /* Ensure it spans the full width */
+            position: relative; /* Ensure the map container is relative */
+        }
+
+        /* Image container - extend the full height of the map */
+        #image-container {
+            position: absolute;
+            top: 10px; /* Adjust to fit within the map */
+            right: 10px;
+            width: 450px;  /* Adjust width as needed */
+            height: auto; /* Auto height for flexibility */
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            z-index: 1000; /* Ensure it appears above the map */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #info-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Animation for audio inside the map */
+        #audio-visualizer {
+            position: absolute;
+            bottom: 10px; /* Adjust position as needed */
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none; /* Initially hidden */
+        }
+
+        #audio-visualizer div {
+            width: 10px;
+            height: 40px;
+            background: #000;
+            margin: 0 2px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { height: 40px; }
+            50% { height: 80px; }
+        }
+
+        /* Controls for audio */
+        #audio-controls {
+            position: absolute;
+            bottom: 10px; /* Adjust position as needed */
+            right: 10px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #play-pause-button {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #000;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        /* Ensure that the h1 stays within the view */
+        h1 {
+            margin: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Interactive Imus City Map with Historical Places</h1>
+
+    <!-- Map Container -->
+    <div id="map">
+        <!-- Image Container inside the map -->
+        <div id="image-container">
+            <img id="info-image" src="images/default-image.jpg" alt="Historical Site Image">
+        </div>
+        <!-- Audio Visualizer inside the map -->
+        <div id="audio-visualizer">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <!-- Audio Controls inside the map -->
+        <div id="audio-controls">
+            <div id="play-pause-button">Play</div>
+        </div>
+    </div>
+
+    <!-- JavaScript for map and audio -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        let currentAudio = null; // Variable to keep track of the currently playing audio
+        let isPlaying = false;  // Variable to keep track of audio playback status
+
+        // Coordinates for Gen. Juan Castañeda Senior High School
+        const schoolLat = 14.3822;
+        const schoolLon = 120.9367;
+
+        // Initialize the map and set the view
+        const map = L.map('map').setView([schoolLat, schoolLon], 14);
+
+        // Tile layers for ESRI World Imagery and OpenStreetMap
+        const esriWorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: '© Esri, © OpenStreetMap contributors',
+            maxZoom: 18
+        });
+
+        const openStreetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 18
+        });
+
+        // Add OpenStreetMap as the default tile layer
+        openStreetMap.addTo(map);
+
+        // Add base layer switch control for ESRI World Imagery and OpenStreetMap
+        const baseMaps = {
+            "OpenStreetMap": openStreetMap,
+            "ESRI World Imagery": esriWorldImagery
+        };
+
+        L.control.layers(baseMaps).addTo(map);
+
+        // Add marker and pop-up for Gen. Juan Castañeda Senior High School
+        L.marker([schoolLat, schoolLon]).addTo(map)
+            .bindPopup('You are currently here')
+            .openPopup();
+
+        // Define historical locations
+        const historicalLocations = [
+            { lat: 14.4297, lon: 120.9367, name: 'Alapan Elementary School', image: 'images/alapan-elementary.jpg', audio: 'audio/alapan-elementary.mp3' },
+            { lat: 14.4289, lon: 120.9360, name: 'Battle of Alapan Marker', image: 'images/battle-of-alapan.jpg', audio: 'audio/battle-of-alapan.mp3' },
+            { name: 'Alapan I Elementary School', lat: 14.415522, lon: 120.918729, trivia: 'Principal: CHRISTIAN MESPHER A. HERNANDEZ', image: 'images/12.jpg' },
+        { name: 'Alapan II Elementary School', lat: 14.408381, lon: 120.896208, trivia: 'Principal: CRISTINA G. LAGASCA', image: 'images/school.jpg' },
+        { name: 'Anabu I Elementary School', lat: 14.402526102531116, lon: 120.9405363811496, trivia: 'Principal: ROSEMARIE M. ORCULLO', image: 'images/school.jpg' },
+        { name: 'Anabu II Elementary School', lat: 14.387681, lon: 120.940044, trivia: 'Principal: ANDREA A. ANGELES', image: 'images/school.jpg' },
+        { name: 'Bayan Luma I Elementary School', lat: 14.413063, lon: 120.934443, trivia: 'Principal: EDEN P. REYES', image: 'images/school.jpg' },
+        { name: 'Bayan Luma II Elementary School', lat: 14.407309, lon: 120.936074, trivia: 'Principal: MARILYN R. TULAY', image: 'images/school.jpg' },
+        { name: 'Buhay na Tubig Elementary School', lat: 14.400118, lon: 120.960444, trivia: 'Principal: GINA U. REYES', image: 'images/school.jpg' },
+        { name: 'Buhay na Tubig Elementary School - Maharlika Annex', lat: 14.396641, lon: 120.959363, trivia: 'Principal: GINA U. REYES', image: 'images/school.jpg' },
+        { name: 'Bukandala Elementary School', lat: 14.404974, lon: 120.926250, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Carsadang Bago Elementary School', lat: 14.429313, lon: 120.927790, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Cayetano Topacio Elementary School', lat: 14.426610, lon: 120.932857, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Estanislao Villanueva Elementary School', lat: 14.434853236101437, lon: 120.93079430701864, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Gov. D. M. Camerino Elementary School', lat: 14.442009, lon: 120.923433, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Imus Pilot Elementary School', lat: 14.426878, lon: 120.939134, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Malagasang I Elementary School', lat: 14.388519, lon: 120.928313, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Malagasang II Elementary School', lat: 14.373096, lon: 120.928342, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Malagasang III Elementary School', lat: 14.360220, lon: 120.927636, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Palico Elementary School', lat: 14.427829, lon: 120.947316, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Pasong Buaya I Elementary School', lat: 14.373806, lon: 1120.966161, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Pasong Buaya II Elementary School', lat: 14.389870, lon: 120.964786, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Pasong Buaya III Elementary School', lat: 14.390463, lon: 120.962093, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Pasong Santol Elementary School', lat: 14.373585, lon: 120.941501, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Pasong Santol Elementary School - Golden City', lat: 14.364942, lon: 120.928913, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Tanzang Luma Elementary School', lat: 14.415225, lon: 120.945378, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Tinabunan Elementary School', lat: 14.431834, lon: 120.916666, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'Toclong Elementary School', lat: 14.438402, lon: 120.932198, trivia: 'Principal: N/A', image: 'images/school.jpg' },
+        { name: 'General Emilio Aguinaldo High School (GEANHS)', lat: 14.427910, lon: 120.946522, trivia: 'Address: LTO Compound Palico IV Imus City, Cavite 4103 Contact No: (046) 472 0627 / (046) 471 5982 E-mail Address: geanhsimus2008@yahoo.com Officer In Charge: LERMA V. PEÑA', image: 'images/school.jpg' },
+        { name: 'General Licerio Topacio National High School', lat: 14.393343, lon: 120.959982, trivia: 'Address: Pasong Buaya II, Imus City, Cavite 4103 Contact No: (046) 477 3550 / +63 920 949 5821 E-mail Address: geanhs_annex@yahoo.com Teacher In Charge: PETRONIA N. TARUN', image: 'images/school.jpg' },
+        { name: 'Imus National High School - Main', lat: 14.407148, lon: 120.926057, trivia: 'Address: Imus City, Cavite 4103 Principal: JENNIFER H. ESPIRITU Contact No: (046) 472 3167 / +63 916 204 3890', image: 'images/school.jpg' },
+        { name: 'Governor Juanito Reyes Remulla Senior High School', lat: 14.440895811248543, lon: 120.92918065179227, trivia: 'Address: Toclong II-B City of Imus<br>Contact No: (046) 416-1735<br>E-mail Address: 342587@deped.gov.ph<br>School Head: ROLAND J. CATAPAT', image: 'images/school.jpg' },
+        { name: 'General Juan Castañeda Senior High School', lat: 14.3822, lon: 120.9367, trivia: 'Address: 90 Anabu II-A City of Imus Cavite, 4103<br>Contact No: (046)456-5752 / (046)418-1083<br>E-mail Address: genjuancastaneda2016@yahoo.com<br>Officer In Charge: NESSA-AMIE P. LOPE', image: 'images/23.jpg' },
+        { name: 'General Pantaleon Garcia Senior High School', lat: 14.392721, lon: 120.919725, trivia: 'Address: Malagasang I-G, City of Imus, Cavite 4103<br>Contact No: 046-529-8467 | 046-8514-484 | 0917-651-7984<br>E-mail Address: gen.pantaleonshs@gmail.com<br>Officer In Charge: RAFAEL R. SANTOS', image: 'images/2.png' },
+        { name : 'General Flaviano Yengko Senior High School', lat: 14.392733480166726, lon: 120.96229794994284, trivia: 'Address: 90 Anabu II-A City of Imus Cavite, 4103<br>Contact No: (046)456-5752 / (046)418-1083<br>E-mail Address: genjuancastaneda2016@yahoo.com<br>Officer In Charge: NESSA-AMIE P. LOPE', image: 'images/school.jpg' },
+        
+        {
+            name: 'Battle of Alapan Historical Marker',
+            lat: 14.4347,
+            lon: 120.9392,
+            trivia: '4.7 (15) · Historical landmark<br>"You can enter this location for free."',
+            image: 'images/alapan.jpg',
+            audio: 'audio/battle-of-alapan.mp3'
+        },
+        
+        {
+            name: 'Bridge of Isabel II Historical Marker',
+            lat: 14.4321,
+            lon: 120.9345,
+            trivia: '4.7 (7) · Historical landmark<br>"Bridge of Isabel II Historical Marker"',
+            image: 'images/bridge-of-isabel-ii.jpg',
+            audio: 'audio/alapan.mp3'
+        },
+      
+        {
+            name: 'Aguinaldo Shrine (Museo ni Emilio Aguinaldo)',
+            lat: 14.445110193778062,
+            lon: 120.90694783559833,
+            trivia: 'Historical site and museum dedicated to Emilio Aguinaldo, the first President of the Philippines.',
+            image: 'images/alapan.jpg' // Update with the appropriate image path
+        },
+        
+        {
+                name: 'Imus Division Office',
+                lat: 14.43796159562494,
+                lon: 120.93546066520824,
+                trivia: 'Address: Imus City, Cavite',
+                image: 'images/12.jpg' // Replace with the appropriate image path
+        },
+
+        {
+            name: 'Battle of Imus Monument and Labanan Sa Imus Historical Marker',
+            lat: 14.430025082118565,
+            lon: 120.94034408626139,
+            trivia: 'A historical monument commemorating the Battle of Imus.',
+            image: 'images/battle-of-imus.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Imus Plaza',
+            lat: 14.429176503905957,
+            lon: 120.93659036193309,
+            trivia: 'A central plaza in Imus City, often used for events.',
+            image: 'images/imus-plaza.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Imus Historical Marker',
+            lat: 14.42898927750294,
+            lon: 120.93620388000528,
+            trivia: 'A marker detailing the historical significance of Imus.',
+            image: 'images/imus-historical-marker.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'General Licerio Topacio Monument',
+            lat: 14.428912050240797,
+            lon: 120.93630914016984,
+            trivia: 'A monument dedicated to General Licerio Topacio.',
+            image: 'images/licerio-topacio-monument.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Imus City Hall',
+            lat: 14.428606763009396,
+            lon: 120.93606510723758,
+            trivia: 'The administrative center of Imus City.',
+            image: 'images/imus-city-hall.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'City of Imus Doctors Hospital',
+            lat: 14.400519583956504,
+            lon: 120.9395162084505,
+            trivia: 'A major hospital serving the community.',
+            image: 'images/city-of-imus-doctors-hospital.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Paredes Medical Center and Hospital',
+            lat: 14.412978290896088,
+            lon: 120.94063096291154,
+            trivia: 'A healthcare facility offering various medical services.',
+            image: 'images/paredes-medical-center.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Imus Health Office 2',
+            lat: 14.409785313957446,
+            lon: 120.9369687647662,
+            trivia: 'A local health office providing community health services.',
+            image: 'images/imus-health-office-2.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Tanzang Luma 5 Health Center',
+            lat: 14.417007946995428,
+            lon: 120.94668699458954,
+            trivia: 'A health center serving the Tanzang Luma area.',
+            image: 'images/tanzang-luma-5-health-center.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'B-CARE Maternity Clinic',
+            lat: 14.407290304838867,
+            lon: 120.93544269565254,
+            trivia: 'A maternity clinic providing care for mothers and infants.',
+            image: 'images/b-care-maternity-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Maxicare Primary Care Clinic - Imus',
+            lat: 14.406198745675471,
+            lon: 120.9403634499094,
+            trivia: 'A primary care clinic offering various medical services.',
+            image: 'images/maxicare-primary-care-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Trivium Healthcare',
+            lat: 14.406451861560349,
+            lon: 120.94059786667226,
+            trivia: 'A healthcare facility providing specialized services.',
+            image: 'images/trivium-healthcare.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Bunyi Children And Maternity Clinic',
+            lat: 14.406350600037253,
+            lon: 120.93426376348364,
+            trivia: 'A clinic specializing in children and maternity care.',
+            image: 'images/bunyi-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Vicente-Isabel Multispecialty Clinic and Diagnostic Center',
+            lat: 14.399281116451508,
+            lon: 120.92684107384211,
+            trivia: 'A multispecialty clinic offering diagnostic services.',
+            image: 'images/vicente-isabel-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Labxpert Medical and Diagnostic Center Inc. - Imus, Cavite',
+            lat: 14.413492738352398,
+            lon: 120.94058985989928,
+            trivia: 'A medical and diagnostic center providing various services.',
+            image: 'images/labxpert-medical-center.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Our Lady Of Guadalupe Medical Specialist Clinic',
+            lat: 14.406317976190918,
+            lon: 120.93523447140583,
+            trivia: 'A medical clinic specializing in various health services.',
+            image: 'images/guadalupe-medical-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Health Smart Multispecialty Clinic And Diagnostic Center',
+            lat: 14.415831968131938,
+            lon: 120.94972505517582,
+            trivia: 'A multispecialty clinic providing diagnostic services.',
+            image: 'images/health-smart-clinic.jpg' // Update with the appropriate image path
+        },
+        {
+            name: 'Paredes Medical Center Dental Clinic',
+            lat: 14.412892066267155,
+            lon: 120.94061714205256,
+            trivia: 'A dental clinic offering a range of dental services.',
+            image: 'images/paredes-dental-clinic.jpg' // Update with the appropriate image path
+        },
+
+        ];
+
+        // Loop through the historical locations and add them to the map
+        historicalLocations.forEach(location => {
+            L.marker([location.lat, location.lon]).addTo(map)
+                .bindPopup(location.name)
+                .on('click', function() {
+                    // Display an image and play audio when the marker is clicked
+                    document.getElementById('info-image').src = location.image;
+                    playAudio(location.audio);
+                });
+        });
+
+        // Function to handle audio playback
+        function playAudio(audioFile) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            currentAudio = new Audio(audioFile);
+            currentAudio.play();
+            isPlaying = true;
+
+            document.getElementById('play-pause-button').textContent = 'Pause';
+            document.getElementById('audio-visualizer').style.display = 'flex';
+            document.getElementById('audio-visualizer').classList.add('animate');
+            
+            currentAudio.onended = function() {
+                document.getElementById('audio-visualizer').style.display = 'none';
+                document.getElementById('audio-visualizer').classList.remove('animate');
+                document.getElementById('play-pause-button').textContent = 'Play';
+                isPlaying = false;
+            };
+        }
+
+        // Play/Pause button functionality
+        document.getElementById('play-pause-button').addEventListener('click', function() {
+            if (currentAudio) {
+                if (isPlaying) {
+                    currentAudio.pause();
+                    document.getElementById('play-pause-button').textContent = 'Play';
+                    document.getElementById('audio-visualizer').style.display = 'none';
+                    document.getElementById('audio-visualizer').classList.remove('animate');
+                    isPlaying = false;
+                } else {
+                    currentAudio.play();
+                    document.getElementById('play-pause-button').textContent = 'Pause';
+                    document.getElementById('audio-visualizer').style.display = 'flex';
+                    document.getElementById('audio-visualizer').classList.add('animate');
+                    isPlaying = true;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
