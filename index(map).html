@@ -97,6 +97,21 @@
             margin-right: 10px;
         }
 
+        .back-button {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: white;
+        background-color: rgb(1, 11, 113);
+        border: none;
+        padding: 10px 25px;
+        border-radius: 5px;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 1000;
+        font-weight: bold;
+        }
+
         /* Ensure that the h1 stays within the view */
         h1 {
             margin: 10px;
@@ -108,6 +123,8 @@
 
     <h1>Interactive Imus City Map with Historical Places</h1>
 
+    <button class="back-button" onclick="window.history.back();">Back</button>
+    
     <!-- Map Container -->
     <div id="map">
         <!-- Image Container inside the map -->
