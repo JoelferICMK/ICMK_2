@@ -210,6 +210,12 @@
 
         // Add OpenStreetMap as the default tile layer
         openStreetMap.addTo(map);
+// Add base layer switch control for ESRI World Imagery and OpenStreetMap
+const baseMaps = {
+            "OpenStreetMap": openStreetMap,
+            "ESRI World Imagery": esriWorldImagery
+        };
+        L.control.layers(baseMaps).addTo(map);
 
         // Add marker and pop-up for Gen. Juan Castañeda Senior High School
         L.marker([schoolLat, schoolLon]).addTo(map)
