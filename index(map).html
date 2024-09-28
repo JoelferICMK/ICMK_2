@@ -207,8 +207,6 @@
             attribution: '© OpenStreetMap contributors',
             maxZoom: 18
         });
-
-        // Add OpenStreetMap as the default tile layer
         openStreetMap.addTo(map);
 // Add base layer switch control for ESRI World Imagery and OpenStreetMap
 const baseMaps = {
@@ -227,18 +225,18 @@ const baseMaps = {
         const historicalLocations = [
         { lat: 14.4297, lon: 120.9367, name: 'Alapan Elementary School', image: 'images/alapan-elementary.jpg', audio: 'audio/alapan-elementary.mp3', color: 'green'},
         { lat: 14.4289, lon: 120.9360, name: 'Battle of Alapan Marker', image: 'images/battle-of-alapan.jpg', audio: 'audio/battle-of-alapan.mp3', color: 'green' },
-        { name: 'Alapan I Elementary School', lat: 14.415522, lon: 120.918729, trivia: 'Principal: CHRISTIAN MESPHER A. HERNANDEZ', image: 'images/12.jpg' },
-        { name: 'Alapan II Elementary School', lat: 14.408381, lon: 120.896208, trivia: 'Principal: CRISTINA G. LAGASCA', image: 'images/school.jpg', color: 'green' },
+        { name: 'Alapan I Elementary School', lat: 14.415522, lon: 120.918729, trivia: 'Principal: CHRISTIAN MESPHER A. HERNANDEZ', image: 'images/12.jpg', audio: 'audio/14.wav' },
+        { name: 'Alapan II Elementary School', lat: 14.408381, lon: 120.896208, trivia: 'Principal: CRISTINA G. LAGASCA', image: 'images/11.jpg', color: 'green', audio: 'audio/13.wav' },
         { name: 'Anabu I Elementary School', lat: 14.402526102531116, lon: 120.9405363811496, trivia: 'Principal: ROSEMARIE M. ORCULLO', image: 'images/school.jpg', color: 'green' },
-        { name: 'Anabu II Elementary School', lat: 14.387681, lon: 120.940044, trivia: 'Principal: ANDREA A. ANGELES', image: 'images/school.jpg', color: 'green' },
-        { name: 'Bayan Luma I Elementary School', lat: 14.413063, lon: 120.934443, trivia: 'Principal: EDEN P. REYES', image: 'images/school.jpg', color: 'green' },
+        { name: 'Anabu II Elementary School', lat: 14.387681, lon: 120.940044, trivia: 'Principal: ANDREA A. ANGELES', image: 'images/11.png', color: 'green', audio: 'audio/13.wav' },
+        { name: 'Bayan Luma I Elementary School', lat: 14.413063, lon: 120.934443, trivia: 'Principal: EDEN P. REYES', image: 'images/11.png', color: 'green', audio: 'audio/13.wav' },
         { name: 'Bayan Luma II Elementary School', lat: 14.407309, lon: 120.936074, trivia: 'Principal: MARILYN R. TULAY', image: 'images/school.jpg', color: 'green' },
-        { name: 'Buhay na Tubig Elementary School', lat: 14.400118, lon: 120.960444, trivia: 'Principal: GINA U. REYES', image: 'images/school.jpg', color: 'green' },
-        { name: 'Buhay na Tubig Elementary School - Maharlika Annex', lat: 14.396641, lon: 120.959363, trivia: 'Principal: GINA U. REYES', image: 'images/school.jpg', color: 'green' },
+        { name: 'Buhay na Tubig Elementary School', lat: 14.400118, lon: 120.960444, trivia: 'Principal: GINA U. REYES', image: 'images/13.png', color: 'green', audio: 'audio/12.wav' },
+        { name: 'Buhay na Tubig Elementary School - Maharlika Annex', lat: 14.396641, lon: 120.959363, trivia: 'Principal: GINA U. REYES', image: 'images/15.png', color: 'green', audio: 'audio/16.wav' },
         { name: 'Bukandala Elementary School', lat: 14.404974, lon: 120.926250, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
         { name: 'Carsadang Bago Elementary School', lat: 14.429313, lon: 120.927790, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
         { name: 'Cayetano Topacio Elementary School', lat: 14.426610, lon: 120.932857, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
-        { name: 'Estanislao Villanueva Elementary School', lat: 14.434853236101437, lon: 120.93079430701864, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
+        { name: 'Estanislao Villanueva Elementary School', lat: 14.434853236101437, lon: 120.93079430701864, trivia: 'Principal: N/A', image: 'images/14.jpg', color: 'green', audio: 'audio/15.wav' },
         { name: 'Gov. D. M. Camerino Elementary School', lat: 14.442009, lon: 120.923433, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
         { name: 'Imus Pilot Elementary School', lat: 14.426878, lon: 120.939134, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
         { name: 'Malagasang I Elementary School', lat: 14.388519, lon: 120.928313, trivia: 'Principal: N/A', image: 'images/school.jpg', color: 'green' },
@@ -336,7 +334,8 @@ const baseMaps = {
             lat: 14.428606763009396,
             lon: 120.93606510723758,
             trivia: 'The administrative center of Imus City.',
-            image: 'images/imus-city-hall.jpg', // Update with the appropriate image path
+            audio: 'audi/1.wav',
+            image: 'images/1.png', // Update with the appropriate image path
             color: 'orange'
         },
         {
@@ -344,7 +343,8 @@ const baseMaps = {
             lat: 14.400519583956504,
             lon: 120.9395162084505,
             trivia: 'A major hospital serving the community.',
-            image: 'images/city-of-imus-doctors-hospital.jpg', // Update with the appropriate image path
+            audio: 'audio/1.wav',
+            image: 'images/1.png', // Update with the appropriate image path
             color: 'red'
         },
         {
@@ -352,7 +352,8 @@ const baseMaps = {
             lat: 14.412978290896088,
             lon: 120.94063096291154,
             trivia: 'A healthcare facility offering various medical services.',
-            image: 'images/paredes-medical-center.jpg', // Update with the appropriate image path
+            image: 'images/2.png', // Update with the appropriate image path
+            audio: 'audio/2.wav',
             color: 'red'
         },
         {
@@ -360,7 +361,8 @@ const baseMaps = {
             lat: 14.409785313957446,
             lon: 120.9369687647662,
             trivia: 'A local health office providing community health services.',
-            image: 'images/imus-health-office-2.jpg', // Update with the appropriate image path
+            image: 'images/3.png', // Update with the appropriate image path
+            audio: 'audio/4.wav',
             color: 'red'
         },
         {
@@ -368,7 +370,8 @@ const baseMaps = {
             lat: 14.417007946995428,
             lon: 120.94668699458954,
             trivia: 'A health center serving the Tanzang Luma area.',
-            image: 'images/tanzang-luma-5-health-center.jpg', // Update with the appropriate image path
+            image: 'images/4.png', // Update with the appropriate image path
+            audio: 'audio/5.wav',
             color: 'red'        
         },
         {
@@ -376,7 +379,8 @@ const baseMaps = {
             lat: 14.407290304838867,
             lon: 120.93544269565254,
             trivia: 'A maternity clinic providing care for mothers and infants.',
-            image: 'images/b-care-maternity-clinic.jpg', // Update with the appropriate image path
+            image: 'images/5.png', // Update with the appropriate image path
+            audio: 'audio/6.wav',
             color: 'red'        
         },
         {
@@ -384,23 +388,18 @@ const baseMaps = {
             lat: 14.406198745675471,
             lon: 120.9403634499094,
             trivia: 'A primary care clinic offering various medical services.',
-            image: 'images/maxicare-primary-care-clinic.jpg', // Update with the appropriate image path
+            image: 'images/6.png', // Update with the appropriate image path
+            audio: 'audio/8.wav',
             color: 'red'
         },
-        {
-            name: 'Trivium Healthcare',
-            lat: 14.406451861560349,
-            lon: 120.94059786667226,
-            trivia: 'A healthcare facility providing specialized services.',
-            image: 'images/trivium-healthcare.jpg', // Update with the appropriate image path
-            color: 'red'
-        },
+        
         {
             name: 'Bunyi Children And Maternity Clinic',
             lat: 14.406350600037253,
             lon: 120.93426376348364,
             trivia: 'A clinic specializing in children and maternity care.',
-            image: 'images/bunyi-clinic.jpg', // Update with the appropriate image path
+            image: 'images/8.png', // Update with the appropriate image path
+            audio: 'audio/7.wav',
             color: 'red'
         },
         {
@@ -408,7 +407,8 @@ const baseMaps = {
             lat: 14.399281116451508,
             lon: 120.92684107384211,
             trivia: 'A multispecialty clinic offering diagnostic services.',
-            image: 'images/vicente-isabel-clinic.jpg', // Update with the appropriate image path
+            image: 'images/9.png', // Update with the appropriate image path
+            audio: 'audio/9.wav',
             color: 'red'
         },
         {
@@ -416,7 +416,8 @@ const baseMaps = {
             lat: 14.413492738352398,
             lon: 120.94058985989928,
             trivia: 'A medical and diagnostic center providing various services.',
-            image: 'images/labxpert-medical-center.jpg', // Update with the appropriate image path
+            image: 'images/10.png', // Update with the appropriate image path
+            audio: 'audio/10.wav',
             color: 'red'
         },
         {
@@ -424,7 +425,8 @@ const baseMaps = {
             lat: 14.406317976190918,
             lon: 120.93523447140583,
             trivia: 'A medical clinic specializing in various health services.',
-            image: 'images/guadalupe-medical-clinic.jpg', // Update with the appropriate image path
+            image: 'images/11.png', // Update with the appropriate image path
+            audio: 'audio/11.wav',
             color: 'red'
         },
         {
