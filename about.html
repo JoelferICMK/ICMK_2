@@ -3,71 +3,84 @@
 <head>
     <title>About Us - ICMK: ROBOTS</title>
     <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Add this line -->
     <style>
+        /* Reset body margin and padding */
         body {
-             margin: 0;
-             padding: 0;
-             font-family: Arial, sans-serif;
-             background-image: url('images/LandingPage2.png');
-             background-size: cover;
-             background-position: center;
-             background-repeat: no-repeat;
-             color: white;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('images/LandingPage2.png'); /* Path to your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
         }
+
+        /* Main section styling */
         section {
             background-color: rgba(0, 0, 0, 0.6); /* Transparency for better readability */
-            padding: 40px;
-            border-radius: 10px;
-            margin: 20px;
-            max-width: 1200px;
+            padding: 5%; /* Adjusted padding to use percentage */
+            border-radius: 1%; /* Slightly rounded corners */
+            margin: 2%; /* Changed to percentage for responsive spacing */
+            max-width: 80%; /* Maximum width to maintain layout on larger screens */
             margin: auto;
         }
+
+        /* Flexbox container for images and text */
         .team-member {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 40px;
-            flex-wrap: wrap; /* Allows the text to go under the image on smaller screens */
+            margin-bottom: 5%; /* Adjusted to percentage */
+            flex-wrap: nowrap; /* Prevents wrapping */
         }
+
         .team-member img {
-            max-width: 300px; /* Image size */
-            margin-right: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            max-width: 25%; /* Set to percentage for responsive images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 2%; /* Adjusted to percentage for spacing */
+            border-radius: 2%; /* Slightly rounded corners */
         }
+
         .team-member .info {
-            max-width: 500px;
+            max-width: 60%; /* Set to percentage for responsive text */
         }
+
         h1, h2 {
             text-align: center;
         }
+
         p {
             font-size: 1.1em;
             line-height: 1.6;
         }
+
+        /* Responsive design: On smaller screens, maintain layout without stacking */
         @media (max-width: 768px) {
             .team-member {
-                flex-direction: column;
-                text-align: center;
+                justify-content: space-between; /* Adjust layout for smaller screens */
             }
 
             .team-member img {
-                margin-right: 0;
+                margin-right: 1%; /* Adjusted to percentage for spacing */
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- About Us content -->
     <section>
         <h1>About Us</h1>
         <p style="text-align: center;">We are ICMK, dedicated to providing advanced robotic navigation solutions through interactive maps.</p>
     </section>
 
+    <!-- Team members section -->
     <section>
         <h2>Meet Our Team</h2>
 
+        <!-- Team member 1 -->
         <div class="team-member">
             <img src="images/11.png" alt="Team Member 1">
             <div class="info">
@@ -76,6 +89,7 @@
             </div>
         </div>
 
+        <!-- Team member 2 -->
         <div class="team-member">
             <img src="images/12.png" alt="Team Member 2">
             <div class="info">
@@ -84,6 +98,7 @@
             </div>
         </div>
 
+        <!-- Team member 3 -->
         <div class="team-member">
             <img src="images/13.png" alt="Team Member 3">
             <div class="info">
