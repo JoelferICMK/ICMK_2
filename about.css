@@ -1,0 +1,54 @@
+body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('images/LandingPage2.png'); /* Path to your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* Stack sections vertically */
+        }
+        section {
+            background-color: rgba(0, 0, 0, 0.6); /* Transparency for better readability */
+            padding: 5%; /* Adjusted padding to use percentage */
+            border-radius: 1%; /* Slightly rounded corners */
+            margin: 2%; /* Changed to percentage for responsive spacing */
+            max-width: 80%; /* Maximum width to maintain layout on larger screens */
+            margin: auto;
+        }
+        .team-member {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5%; /* Adjusted to percentage */
+            flex-wrap: wrap; /* Allows wrapping for better responsiveness */
+        }
+        .team-member img {
+            max-width: 25%; /* Set to percentage for responsive images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 2%; /* Adjusted to percentage for spacing */
+            border-radius: 2%; /* Slightly rounded corners */
+        }
+        .team-member .info {
+            max-width: 60%; /* Set to percentage for responsive text */
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            text-align: center; /* Center text for uniformity */
+        }
+        @media (max-width: 768px) {
+            .team-member {
+                justify-content: space-between; /* Adjust layout for smaller screens */
+            }
+            .team-member img {
+                margin-right: 1%; /* Adjusted to percentage for spacing */
+            }
+        }
