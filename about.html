@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - ICMK: ROBOTS</title>
     <link rel="stylesheet" href="styles.css">
     <style>
@@ -15,6 +17,9 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
             color: white;
+            min-height: 100vh; /* Ensure body has at least full height for scrolling */
+            display: flex;
+            flex-direction: column; /* Stack sections vertically */
         }
 
         /* Main section styling */
@@ -33,7 +38,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 5%; /* Adjusted to percentage */
-            flex-wrap: nowrap; /* Prevents wrapping */
+            flex-wrap: wrap; /* Allows wrapping for better responsiveness */
         }
 
         .team-member img {
@@ -54,6 +59,7 @@
         p {
             font-size: 1.1em;
             line-height: 1.6;
+            text-align: center; /* Center text for uniformity */
         }
 
         /* Responsive design: On smaller screens, maintain layout without stacking */
@@ -73,7 +79,7 @@
     <!-- About Us content -->
     <section>
         <h1>About Us</h1>
-        <p style="text-align: center;">We are ICMK, dedicated to providing advanced robotic navigation solutions through interactive maps.</p>
+        <p>We are ICMK, dedicated to providing advanced robotic navigation solutions through interactive maps.</p>
     </section>
 
     <!-- Team members section -->
