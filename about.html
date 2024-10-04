@@ -6,7 +6,6 @@
     <title>About Us - ICMK: ROBOTS</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Reset body margin and padding */
         body {
             margin: 0;
             padding: 0;
@@ -21,8 +20,6 @@
             display: flex;
             flex-direction: column; /* Stack sections vertically */
         }
-
-        /* Main section styling */
         section {
             background-color: rgba(0, 0, 0, 0.6); /* Transparency for better readability */
             padding: 5%; /* Adjusted padding to use percentage */
@@ -31,8 +28,6 @@
             max-width: 80%; /* Maximum width to maintain layout on larger screens */
             margin: auto;
         }
-
-        /* Flexbox container for images and text */
         .team-member {
             display: flex;
             align-items: center;
@@ -40,34 +35,27 @@
             margin-bottom: 5%; /* Adjusted to percentage */
             flex-wrap: wrap; /* Allows wrapping for better responsiveness */
         }
-
         .team-member img {
             max-width: 25%; /* Set to percentage for responsive images */
             height: auto; /* Maintain aspect ratio */
             margin-right: 2%; /* Adjusted to percentage for spacing */
             border-radius: 2%; /* Slightly rounded corners */
         }
-
         .team-member .info {
             max-width: 60%; /* Set to percentage for responsive text */
         }
-
         h1, h2 {
             text-align: center;
         }
-
         p {
             font-size: 1.1em;
             line-height: 1.6;
             text-align: center; /* Center text for uniformity */
         }
-
-        /* Responsive design: On smaller screens, maintain layout without stacking */
         @media (max-width: 768px) {
             .team-member {
                 justify-content: space-between; /* Adjust layout for smaller screens */
             }
-
             .team-member img {
                 margin-right: 1%; /* Adjusted to percentage for spacing */
             }
@@ -75,18 +63,12 @@
     </style>
 </head>
 <body>
-
-    <!-- About Us content -->
     <section>
         <h1>About Us</h1>
         <p>We are ICMK, dedicated to providing advanced robotic navigation solutions through interactive maps.</p>
     </section>
-
-    <!-- Team members section -->
     <section>
         <h2>Meet Our Team</h2>
-
-        <!-- Team member 1 -->
         <div class="team-member">
             <img src="images/11.png" alt="Team Member 1">
             <div class="info">
@@ -94,8 +76,6 @@
                 <p>John is a robotics engineer specializing in AI-driven navigation systems. He leads the development of our interactive maps with a focus on user-friendly experiences.</p>
             </div>
         </div>
-
-        <!-- Team member 2 -->
         <div class="team-member">
             <img src="images/12.png" alt="Team Member 2">
             <div class="info">
@@ -103,8 +83,6 @@
                 <p>Jane is our lead designer, ensuring that every part of our project not only works smoothly but also looks great. Her designs are at the core of the ICMK experience.</p>
             </div>
         </div>
-
-        <!-- Team member 3 -->
         <div class="team-member">
             <img src="images/13.png" alt="Team Member 3">
             <div class="info">
@@ -113,6 +91,5 @@
             </div>
         </div>
     </section>
-
 </body>
 </html>
