@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>About Us - ICMK: ROBOTS</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset body margin and padding */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('images/team.png'); /* Path to your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        /* Main section styling */
+        section {
+            background-color: rgba(0, 0, 0, 0.6); /* Transparency for better readability */
+            padding: 5%; /* Adjusted padding to use percentage */
+            border-radius: 1%; /* Slightly rounded corners */
+            margin: 2%; /* Changed to percentage for responsive spacing */
+            max-width: 80%; /* Maximum width to maintain layout on larger screens */
+            margin: auto;
+        }
+
+        /* Flexbox container for images and text */
+        .team-member {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5%; /* Adjusted to percentage */
+            flex-wrap: nowrap; /* Prevents wrapping */
+        }
+
+        .team-member img {
+            max-width: 25%; /* Set to percentage for responsive images */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 2%; /* Adjusted to percentage for spacing */
+            border-radius: 2%; /* Slightly rounded corners */
+        }
+
+        .team-member .info {
+            max-width: 60%; /* Set to percentage for responsive text */
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        /* Responsive design: On smaller screens, maintain layout without stacking */
+        @media (max-width: 768px) {
+            .team-member {
+                justify-content: space-between; /* Adjust layout for smaller screens */
+            }
+
+            .team-member img {
+                margin-right: 1%; /* Adjusted to percentage for spacing */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- About Us content -->
+    <section>
+        <h1>About Us</h1>
+        <p style="text-align: center;">We are ICMK, dedicated to providing advanced robotic navigation solutions through interactive maps.</p>
+    </section>
+
+    <!-- Team members section -->
+    <section>
+        <h2>Meet Our Team</h2>
+
+        <!-- Team member 1 -->
+        <div class="team-member">
+            <img src="images/team1.jpg" alt="Team Member 1">
+            <div class="info">
+                <h3>John Doe</h3>
+                <p>John is a robotics engineer specializing in AI-driven navigation systems. He leads the development of our interactive maps with a focus on user-friendly experiences.</p>
+            </div>
+        </div>
+
+        <!-- Team member 2 -->
+        <div class="team-member">
+            <img src="images/team2.jpg" alt="Team Member 2">
+            <div class="info">
+                <h3>Jane Smith</h3>
+                <p>Jane is our lead designer, ensuring that every part of our project not only works smoothly but also looks great. Her designs are at the core of the ICMK experience.</p>
+            </div>
+        </div>
+
+        <!-- Team member 3 -->
+        <div class="team-member">
+            <img src="images/team3.png" alt="Team Member 3">
+            <div class="info">
+                <h3>Michael Lee</h3>
+                <p>Michael is a software developer focused on the implementation of AI algorithms that power our navigation system, working closely with the hardware team to bring our maps to life.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
