@@ -20,10 +20,10 @@
         /* Main section styling */
         section {
             background-color: rgba(0, 0, 0, 0.6); /* Transparency for better readability */
-            padding: 5%; /* Adjusted padding to use percentage */
-            border-radius: 1%; /* Slightly rounded corners */
-            margin: 2%; /* Changed to percentage for responsive spacing */
-            max-width: 80%; /* Maximum width to maintain layout on larger screens */
+            padding: 40px;
+            border-radius: 10px;
+            margin: 20px;
+            max-width: 1200px;
             margin: auto;
         }
 
@@ -32,19 +32,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 5%; /* Adjusted to percentage */
-            flex-wrap: nowrap; /* Prevents wrapping */
+            margin-bottom: 40px;
+            flex-wrap: wrap; /* Allows the text to go under the image on smaller screens */
         }
 
         .team-member img {
-            max-width: 25%; /* Set to percentage for responsive images */
-            height: auto; /* Maintain aspect ratio */
-            margin-right: 2%; /* Adjusted to percentage for spacing */
-            border-radius: 2%; /* Slightly rounded corners */
+            max-width: 300px; /* Image size */
+            margin-right: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
         }
 
         .team-member .info {
-            max-width: 60%; /* Set to percentage for responsive text */
+            max-width: 500px;
         }
 
         h1, h2 {
@@ -56,14 +56,15 @@
             line-height: 1.6;
         }
 
-        /* Responsive design: On smaller screens, maintain layout without stacking */
+        /* Responsive design: On smaller screens, stack the text below the image */
         @media (max-width: 768px) {
             .team-member {
-                justify-content: space-between; /* Adjust layout for smaller screens */
+                flex-direction: column;
+                text-align: center;
             }
 
             .team-member img {
-                margin-right: 1%; /* Adjusted to percentage for spacing */
+                margin-right: 0;
             }
         }
     </style>
@@ -82,7 +83,7 @@
 
         <!-- Team member 1 -->
         <div class="team-member">
-            <img src="images/12.png" alt="Team Member 1">
+            <img src="images/11.png" alt="Team Member 1">
             <div class="info">
                 <h3>John Doe</h3>
                 <p>John is a robotics engineer specializing in AI-driven navigation systems. He leads the development of our interactive maps with a focus on user-friendly experiences.</p>
@@ -91,7 +92,7 @@
 
         <!-- Team member 2 -->
         <div class="team-member">
-            <img src="images/13.png" alt="Team Member 2">
+            <img src="images/12.png" alt="Team Member 2">
             <div class="info">
                 <h3>Jane Smith</h3>
                 <p>Jane is our lead designer, ensuring that every part of our project not only works smoothly but also looks great. Her designs are at the core of the ICMK experience.</p>
@@ -100,7 +101,7 @@
 
         <!-- Team member 3 -->
         <div class="team-member">
-            <img src="images/14.png" alt="Team Member 3">
+            <img src="images/13.png" alt="Team Member 3">
             <div class="info">
                 <h3>Michael Lee</h3>
                 <p>Michael is a software developer focused on the implementation of AI algorithms that power our navigation system, working closely with the hardware team to bring our maps to life.</p>
