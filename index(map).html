@@ -190,12 +190,14 @@
         let isPlaying = false;  // Variable to keep track of audio playback status
 
         // Coordinates for Gen. Juan Castañeda Senior High School
-        const schoolLat = 14.427911;
-        const schoolLon = 120.94652;
+       const schoolLat = 14.427910;
+       const schoolLon = 120.946522;
 
-        // Initialize the map and set the view
-        const map = L.map('map').setView([schoolLat, schoolLon], 14);
+       const map = L.map('map').setView([schoolLat, schoolLon], 14);
 
+L.marker([schoolLat, schoolLon]).addTo(map)
+    .bindPopup('General Emilio Aguinaldo High School')
+    .openPopup();
         // Tile layers for ESRI World Imagery and OpenStreetMap
         const esriWorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
             attribution: '© Esri, © OpenStreetMap contributors',
